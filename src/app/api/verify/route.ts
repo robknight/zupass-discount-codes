@@ -6,8 +6,7 @@ import path from "path";
 // @ts-ignore ffjavascript does not have types
 import { getCurveFromName } from "ffjavascript";
 
-// const GPC_ARTIFACTS_PATH = path.join(process.cwd(), "public/artifacts");
-const GPC_ARTIFACTS_PATH = path.join("artifacts");
+const GPC_ARTIFACTS_PATH = path.join(process.cwd(), "public/artifacts");
 console.log("Debug: GPC_ARTIFACTS_PATH", GPC_ARTIFACTS_PATH);
 
 export async function POST(req: NextRequest) {
