@@ -6,7 +6,10 @@ import path from "path";
 // @ts-ignore ffjavascript does not have types
 import { getCurveFromName } from "ffjavascript";
 
-const GPC_ARTIFACTS_PATH = path.join(process.cwd(), "public/artifacts");
+const GPC_ARTIFACTS_PATH = path.join(
+  process.cwd(),
+  "node_modules/@pcd/proto-pod-gpc-artifacts"
+);
 
 export async function POST(req: NextRequest) {
   const { serializedProofResult } = await req.json();
