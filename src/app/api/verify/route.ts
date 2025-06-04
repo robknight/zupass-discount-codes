@@ -7,7 +7,7 @@ import path from "path";
 import { getCurveFromName } from "ffjavascript";
 import { prisma } from '@/lib/prisma';
 
-const GPC_ARTIFACTS_PATH = path.join(process.cwd(), "public/artifacts");
+const GPC_ARTIFACTS_PATH = path.join(process.cwd(), "data/artifacts");
 console.log("Debug: GPC_ARTIFACTS_PATH", GPC_ARTIFACTS_PATH);
 
 export async function POST(req: NextRequest) {
@@ -26,6 +26,8 @@ export async function POST(req: NextRequest) {
     // @ts-ignore
     globalThis.curve_bn128 = getCurveFromName("bn128", { singleThread: true });
   }
+  
+  console.log("boundConfig.circuitIdentifier", boundConfig.circuitIdentifier);
 
   const res = await gpcVerify(
     proof,
