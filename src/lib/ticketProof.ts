@@ -15,5 +15,9 @@ export function getTicketProofRequest() {
       attendeeName: true,
       eventId: true,
     },
+    externalNullifier: {
+      type: "string",
+      value: "APP_SPECIFIC_NULLIFIER"
+    }
   });
 }

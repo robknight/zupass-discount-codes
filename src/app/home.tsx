@@ -32,6 +32,8 @@ function RequestProof() {
   const { z, connectionState } = useParcnetClient();
   const [proof, setProof] = useState<ProveResult | null>(null);
   const [verified, setVerified] = useState<boolean | null>(null);
+  const [claimedCode, setClaimedCode] = useState<string | null>(null);
+  const [claimError, setClaimError] = useState<string | null>(null);
 
   const requestProof = useCallback(async () => {
     if (connectionState !== ClientConnectionState.CONNECTED) return;
@@ -53,6 +55,9 @@ function RequestProof() {
   const verifyProof = useCallback(async () => {
     if (!proof) return;
 
+    setClaimedCode(null);
+    setClaimError(null);
+
     const serializedProofResult = serializeProofResult(proof);
 
     const res = await fetch("/api/verify", {
@@ -65,7 +70,12 @@ function RequestProof() {
     if (res.ok) {
       const data = await res.json();
       setVerified(data.verified);
+      setClaimedCode(data.code ?? null);
+      setClaimError(data.error ?? null);
     } else {
+      setVerified(false);
+      setClaimedCode(null);
+      setClaimError("Server error verifying proof.");
       console.error(res.statusText);
     }
   }, [z, proof]);
@@ -98,6 +108,16 @@ function RequestProof() {
             {verified !== null && (
               <div className={verified ? "text-green-500" : "text-red-500"}>
                 Verified: {verified ? "Yes" : "No"}
+              </div>
+            )}
+            {claimedCode && (
+              <div className="text-blue-400 mt-2">
+                Your voucher code: <span className="font-mono">{claimedCode}</span>
+              </div>
+            )}
+            {claimError && (
+              <div className="text-red-400 mt-2">
+                Error: {claimError}
               </div>
             )}
             <div className="mt-4">
