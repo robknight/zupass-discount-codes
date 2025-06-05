@@ -8,7 +8,6 @@ import { getCurveFromName } from "ffjavascript";
 import { prisma } from '@/lib/prisma';
 
 const GPC_ARTIFACTS_PATH = path.join(process.cwd(), "data/artifacts");
-console.log("Debug: GPC_ARTIFACTS_PATH", GPC_ARTIFACTS_PATH);
 
 export async function POST(req: NextRequest) {
   const { serializedProofResult } = await req.json();
@@ -27,8 +26,6 @@ export async function POST(req: NextRequest) {
     globalThis.curve_bn128 = getCurveFromName("bn128", { singleThread: true });
   }
   
-  console.log("boundConfig.circuitIdentifier", boundConfig.circuitIdentifier);
-
   const res = await gpcVerify(
     proof,
     {
@@ -57,6 +54,7 @@ export async function POST(req: NextRequest) {
     if (!voucher) {
       return NextResponse.json({ verified: true, code: null, error: 'No codes remaining.' });
     }
+    // Assign nullifier to voucher code
     await prisma.voucherCode.update({ where: { id: voucher.id }, data: { nullifier } });
     return NextResponse.json({ verified: true, code: voucher.voucher_code });
   }

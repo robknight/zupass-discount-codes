@@ -4,8 +4,6 @@
 
 This project is a demo app that allows users to connect their Zupass wallet and claim a unique discount code using zero-knowledge proofs (ZKPs). The app ensures each user can only claim one code, using a privacy-preserving nullifier, and prevents double-claims. It demonstrates the use of PODs, GPCs, and the Zupass Z-API for privacy-preserving authentication and selective disclosure.
 
-**The backend database is Postgres, managed through Vercel's Storage/Marketplace integration (Prisma Postgres), and accessed via Prisma ORM.**
-
 ## Tech Stack
 - **Next.js** (React, App Router)
 - **Prisma** (ORM for Postgres)
@@ -16,11 +14,15 @@ This project is a demo app that allows users to connect their Zupass wallet and 
 - **@parcnet-js/ticket-spec** (Ticket proof helpers)
 - **Tailwind CSS** (styling)
 
+**The backend database is Postgres, managed through Vercel's Storage/Marketplace integration (Prisma Postgres), and accessed via Prisma ORM.**
+
 ## Project Structure
 
 ```
 zupass-discount-codes/
 ├── prisma/                # Prisma schema, migrations, seed script
+├── data/                 # ZK artifacts and backend/serverless files
+│   └── artifacts/        # ZK circuits, keys, etc. (used by backend)
 ├── src/
 │   ├── app/              # Next.js app directory (API routes, pages, components)
 │   ├── lib/              # Utility modules (prisma client, proof helpers)
@@ -45,29 +47,47 @@ zupass-discount-codes/
 - **Zupass Z-API**: Lets the app request proofs from the user's Zupass wallet, including selective disclosure and nullifier generation.
 - **Nullifier**: A privacy-preserving unique value derived from the user's identity and an external string, used to prevent double-claims.
 
+## Backend Options
+
+This demo app can be used in two ways:
+
+1. **With the 0xPARC Vercel-hosted backend:**
+   Follow the instructions below and the app will connect to our backend.
+2. **With your own backend and database:**
+   If you want to run your own backend (for privacy, testing, or development), follow the instructions in "Setting Up Your Own Backend" below.
+
+---
+
 ## Setup Instructions
 
-### Prerequisites
+### A. Using the 0xPARC-hosted Backend (Default, Easiest)
+
+- No backend setup required. The app will connect to the public demo backend managed by 0xPARC.
+- Follow these steps to run the frontend locally:
+
+#### Prerequisites
 - Node.js (18+ recommended)
 - pnpm (or npm/yarn)
-- Vercel account (for deployment and managed Postgres)
 
-### 1. Clone the Repo and Install Dependencies
+#### 1. Clone the Repo and Install Dependencies
 ```sh
 git clone <repo-url>
 cd zupass-discount-codes
 pnpm install
 ```
 
-### 2. Environment Variables
+#### Vercel/Prisma Postgres Setup (Optional)
+If you are using Vercel and Prisma Postgres (Neon) as your backend, follow these additional steps:
+
+####  Environment Variables
 - `.env.example` is a template file listing all required environment variables. Copy it to `.env.local` for development, and to `.env.production` for production if you want to run commands locally with production settings.
 - **DATABASE_URL**: Get this from the Vercel dashboard:
   - Go to your project in Vercel
   - Click on the Storage tab or Database integration (Prisma Postgres/Neon)
   - Copy the connection string (DATABASE_URL) and paste it into your `.env.local` and/or `.env.production` as needed.
 
-### 3. Database Setup
-- **You do not need to create additional databases manually.** Vercel manages the Prisma Postgres database for you when you add it via the Storage/Marketplace integration.
+####  Database Setup
+- Vercel manages the Prisma Postgres database for you when you add it via the Storage/Marketplace integration.
 - Set `DATABASE_URL` in your environment files as described above.
 - Run migrations:
   ```sh
@@ -78,7 +98,7 @@ pnpm install
   npx tsx prisma/seed.ts
   ```
 
-### 4. Using Prisma Studio or Running Prisma Commands with Production Variables
+####  Using Prisma Studio or Running Prisma Commands with Production Variables
 - To run Prisma commands (like `studio`, `migrate`, or `seed`) against your production database locally, use:
   ```sh
   export $(cat .env.production | grep -v '^#' | xargs) && npx prisma studio
@@ -87,18 +107,42 @@ pnpm install
   ```
 - This loads your production environment variables for the command, without needing to copy files.
 
-### 5. Running Locally
+####  Running Locally
 ```sh
 pnpm dev
 ```
 Open [http://localhost:3000](http://localhost:3000)
 
-## Vercel Integration & Deployment
-- Connect your repo to Vercel.
-- Set `DATABASE_URL` in Vercel project settings for both Preview and Production as needed.
-- Deploy:
-  - Preview: `vercel deploy` (answer "no" to production prompt or use `--pre`)
-  - Production: `vercel deploy --prod`
+---
+
+### B. Setting Up Your Own Backend
+
+If you want to run your own backend and database (for privacy, testing, or development), follow these steps:
+
+1. **Set Up a Postgres Database**
+   - You can use any Postgres instance (local, Docker, or cloud).
+
+   **Local Database Quickstart (Docker):**
+   ```sh
+   docker run --name zupass-postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
+   ```
+   - Default connection string: `postgresql://postgres:postgres@localhost:5432/postgres`
+
+2. **Configure Environment Variables**
+   - Copy `.env.example` to `.env.local` and set `DATABASE_URL` to your Postgres connection string.
+
+3. **Run Migrations and Seed the Database**
+   ```sh
+   npx prisma migrate dev --name init
+   npx tsx prisma/seed.ts
+   ```
+
+4. **Start the App**
+   ```sh
+   pnpm dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000)
+
 
 ## API Usage
 - **Endpoint:** `POST /api/verify`

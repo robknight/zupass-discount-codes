@@ -6,8 +6,8 @@ export function getTicketProofRequest() {
   return ticketProofRequest({
     classificationTuples: [
       {
-        signerPublicKey: "YwahfUdUYehkGMaWh0+q3F8itx2h8mybjPmt8CmTJSs",
-        eventId: "5074edf5-f079-4099-b036-22223c0c6995",
+        signerPublicKey: "YwahfUdUYehkGMaWh0+q3F8itx2h8mybjPmt8CmTJSs", // update this to the signer public key of pod you want to verify
+        eventId: "5074edf5-f079-4099-b036-22223c0c6995", // update this to the event id of pod you want to verify
       },
     ],
     fieldsToReveal: {
@@ -17,7 +17,7 @@ export function getTicketProofRequest() {
     },
     externalNullifier: {
       type: "string",
-      value: "APP_SPECIFIC_NULLIFIER"
+      value: "DevconnectArg_Devcon7_Discount" // Set app-specific nullifier here
     }
   });
 }
