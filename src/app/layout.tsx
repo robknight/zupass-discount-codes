@@ -17,11 +17,20 @@ export const metadata: Metadata = {
     description: "Protocol Berg attendees get 25% off DappCon tickets. Verify your attendance with zero-knowledge proof.",
     type: "website",
     url: "https://discount.dappcon.io",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "DappCon Discount Portal - 25% Off for Protocol Berg Attendees",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "DappCon Discount Portal | Protocol Berg Attendees",
     description: "Protocol Berg attendees get 25% off DappCon tickets. Verify your attendance with zero-knowledge proof.",
+    images: ["/og-image.jpg"],
   },
 };
 

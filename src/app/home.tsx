@@ -311,7 +311,7 @@ function RequestProof() {
                 </svg>
               </div>
               <h2 className="text-xl sm:text-2xl font-bold mb-2">Proof Generated</h2>
-              <p className="text-gray-600 text-sm sm:text-base">Your Protocol Berg attendance has been verified</p>
+              <p className="text-gray-600 text-sm sm:text-base">Your Protocol Berg ticket proof has been generated</p>
             </div>
             
             <div className="rounded-lg p-4 mb-4" style={{backgroundColor: 'var(--muted)'}}>
