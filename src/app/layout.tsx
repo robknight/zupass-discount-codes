@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   description: "Protocol Berg attendees get 25% off DappCon tickets. Verify your attendance with zero-knowledge proof to unlock your exclusive discount.",
   keywords: "DappCon, Protocol Berg, discount, zero-knowledge proof, blockchain conference, ethereum",
   authors: [{ name: "DappCon Team" }],
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
   openGraph: {
     title: "DappCon Discount Portal | Protocol Berg Attendees",
     description: "Protocol Berg attendees get 25% off DappCon tickets. Verify your attendance with zero-knowledge proof.",
@@ -27,6 +32,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.avif" type="image/avif" />
+        <link rel="shortcut icon" href="/favicon.svg" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
+      </head>
       <body
         className={`antialiased`}
       >

@@ -103,11 +103,11 @@ function HeroSection() {
           Protocol Berg → DappCon
         </div>
         <h1 className="text-4xl sm:text-5xl md:text-6xl dappcon-heading text-gradient mb-4">
-          Exclusive Discount
+          DappCon Discount Portal
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-6 max-w-2xl mx-auto">
           Protocol Berg attendees get <span className="font-bold" style={{color: 'var(--accent)'}}>25% off</span> DappCon tickets. 
-          Proof you have a unique Protocol Berg ticket using Zupass and zero-knowledge proofs to unlock your discount.
+          Prove you have a unique Protocol Berg ticket using <a href="https://pod.org/z-api/introduction" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Zupass</a> and zero-knowledge proofs to unlock your discount.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
           <div className="text-sm text-gray-600 flex items-center gap-2">
