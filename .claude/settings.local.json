@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:dappcon.io)",
+      "WebFetch(domain:protocol.berlin)",
+      "Bash(find:*)"
+    ],
+    "deny": []
+  }
+}

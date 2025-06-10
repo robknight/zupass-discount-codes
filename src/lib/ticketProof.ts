@@ -11,13 +11,13 @@ export function getTicketProofRequest() {
       },
     ],
     fieldsToReveal: {
-      attendeeEmail: true,
-      attendeeName: true,
+      attendeeEmail: false,
+      attendeeName: false,
       eventId: true,
     },
     externalNullifier: {
       type: "string",
-      value: "DevconnectArg_Devcon7_Discount" // Set app-specific nullifier here
+      value: "ProtocolBerg_DappCon_Discount_2025" // Set app-specific nullifier here
     }
   });
 }
