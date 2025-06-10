@@ -175,50 +175,47 @@ h1, h2, h3, h4, h5, h6 {
 
 .shape {
   position: absolute;
-  border-radius: 9999px;
-  opacity: 0.1;
+  opacity: 0.08;
 }
 
 .shape-1 {
-  width: 120px;
+  width: 200px;
   height: 120px;
-  background: var(--accent);
-  top: 20%;
-  right: 15%;
-  animation: float-delay-1 15s ease-in-out infinite;
+  background: var(--accent-blue);
+  border-radius: 50% 80% 50% 80%;
+  top: 10%;
+  left: -50px;
+  transform: rotate(-15deg);
 }
 
 .shape-2 {
-  width: 80px;
-  height: 80px;
-  background: var(--accent-blue);
-  bottom: 30%;
-  left: 10%;
-  animation: float-delay-2 18s ease-in-out infinite;
+  width: 150px;
+  height: 250px;
+  background: var(--accent);
+  border-radius: 80% 50% 80% 50%;
+  bottom: 20%;
+  right: -30px;
+  transform: rotate(25deg);
 }
 
 .shape-3 {
-  width: 60px;
-  height: 60px;
+  width: 120px;
+  height: 80px;
   background: var(--accent-orange);
-  top: 60%;
-  right: 30%;
-  animation: float-delay-3 12s ease-in-out infinite;
+  border-radius: 60% 90% 60% 90%;
+  top: 50%;
+  right: 20%;
+  transform: rotate(-30deg);
 }
 
-@keyframes float-delay-1 {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-@keyframes float-delay-2 {
-  0%, 100% { transform: translateY(0px) translateX(0px); }
-  50% { transform: translateY(15px) translateX(10px); }
-}
-
-@keyframes float-delay-3 {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+.shape-4 {
+  width: 180px;
+  height: 100px;
+  background: var(--accent-blue);
+  border-radius: 70% 90% 70% 90%;
+  bottom: 10%;
+  left: 15%;
+  transform: rotate(45deg);
 }
 
 .button-primary {
@@ -261,19 +258,32 @@ h1, h2, h3, h4, h5, h6 {
 .card {
   background: white;
   border-radius: 16px;
-  padding: 32px;
+  padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   border: 1px solid var(--border);
 }
 
+@media (min-width: 640px) {
+  .card {
+    padding: 32px;
+  }
+}
+
 .hero-section {
-  min-height: 50vh;
+  min-height: 45vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 60px 20px;
+  padding: 30px 20px;
   position: relative;
+}
+
+@media (min-width: 640px) {
+  .hero-section {
+    min-height: 30vh;
+    padding: 60px 20px;
+  }
 }
 
 .protocol-badge {
