@@ -6,7 +6,7 @@ import {
   Toolbar,
   useParcnetClient,
 } from "@parcnet-js/app-connector-react";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { getTicketProofRequest } from "@/lib/ticketProof";
 import { ProveResult, serializeProofResult } from "@/lib/serialize";
 
@@ -21,7 +21,7 @@ export default function Home() {
         },
       }}
     >
-      <div className="min-h-screen" style={{background: 'var(--background)'}}>
+      <div className="min-h-screen">
         <Header />
         <main>
           <HeroSection />
@@ -34,56 +34,65 @@ export default function Home() {
 }
 
 function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 64);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
-      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
-        <div className="flex items-center justify-between md:justify-between">
-          {/* Desktop Left Navigation */}
+    <header className={`nav-sticky ${isScrolled ? '' : 'nav-hidden'}`}>
+      <div className="container">
+        <div className="flex items-center justify-between py-4">
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <a 
               href="https://dappcon.io/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors flex items-center"
+              className="nav-link"
             >
-              DAPPCON
-              <svg xmlns="http://www.w3.org/2000/svg" className="inline w-3 h-3 ml-1" fill="none" viewBox="0 0 16 16" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 10l4-4m0 0H7m3 0v3" /><rect x="2.75" y="2.75" width="10.5" height="10.5" rx="2.25" stroke="currentColor" strokeWidth="1.5" fill="none"/></svg>
+              DappCon
             </a>
             <a 
               href="https://protocol.berlin/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors flex items-center"
+              className="nav-link"
             >
-              PROTOCOL BERG
-              <svg xmlns="http://www.w3.org/2000/svg" className="inline w-3 h-3 ml-1" fill="none" viewBox="0 0 16 16" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 10l4-4m0 0H7m3 0v3" /><rect x="2.75" y="2.75" width="10.5" height="10.5" rx="2.25" stroke="currentColor" strokeWidth="1.5" fill="none"/></svg>
+              Protocol Berg
             </a>
           </nav>
 
-          {/* Mobile Center Logo + Partnership */}
-          <div className="flex items-center space-x-3 md:hidden mx-auto">
-            <img 
-              src="/dappcon-logo.svg" 
-              alt="DappCon" 
-              className="h-8 w-auto"
-              style={{filter: 'none'}}
-            />
-            <div className="text-xs text-gray-500 font-medium">× Protocol Berg</div>
+          {/* Logo & Partnership */}
+          <div className="flex items-center space-x-3">
+            <div className="micro-text">DAPPCON × PROTOCOL BERG</div>
           </div>
 
-          {/* Desktop Center Logo */}
-          <div className="hidden md:flex items-center space-x-3">
-            <img 
-              src="/dappcon-logo.svg" 
-              alt="DappCon" 
-              className="h-10 w-auto"
-              style={{filter: 'none'}}
-            />
-            <div className="text-sm text-gray-500 font-medium">× Protocol Berg</div>
-          </div>
-
+          {/* Mobile Navigation */}
+          <nav className="md:hidden flex items-center space-x-4">
+            <a 
+              href="https://dappcon.io/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="nav-link text-xs"
+            >
+              DC
+            </a>
+            <a 
+              href="https://protocol.berlin/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="nav-link text-xs"
+            >
+              PB
+            </a>
+          </nav>
         </div>
-
       </div>
     </header>
   );
@@ -91,32 +100,64 @@ function Header() {
 
 function HeroSection() {
   return (
-    <section id="discount" className="hero-section hero-bg">
-      <div className="geometric-shapes">
-        <div className="shape shape-1"></div>
-        <div className="shape shape-2"></div>
-        <div className="shape shape-3"></div>
-        <div className="shape shape-4"></div>
+    <section className="hero">
+      {/* Floating accent blobs */}
+      <div className="accent-blob accent-blob-1"></div>
+      <div className="accent-blob accent-blob-2"></div>
+      
+      {/* Giant watermark */}
+      <div 
+        className="watermark-text" 
+        style={{ 
+          top: '20%', 
+          left: '50%', 
+          transform: 'translateX(-50%) rotate(-5deg)',
+          textTransform: 'uppercase'
+        }}
+      >
+        DISCOUNT
       </div>
-      <div className="container mx-auto px-4 sm:px-6 max-w-4xl relative z-10">
-        <div className="protocol-badge">
-          Protocol Berg → DappCon
-        </div>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl dappcon-heading text-gradient mb-4">
-          DappCon Discount Portal
-        </h1>
-        <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-6 max-w-2xl mx-auto">
-          Protocol Berg attendees get <span className="font-bold" style={{color: 'var(--accent)'}}>25% off</span> DappCon tickets. 
-          Prove you have a unique Protocol Berg ticket using <a href="https://pod.org/z-api/introduction" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Zupass</a> and zero-knowledge proofs to unlock your discount.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
-          <div className="text-sm text-gray-600 flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full" style={{backgroundColor: 'var(--accent)'}}></div>
-            First 1,000 attendees
+
+      <div className="container">
+        <div className="max-w-4xl mx-auto">
+          <div className="partnership-badge fade-in">
+            Protocol Berg → DappCon
           </div>
-          <div className="text-sm text-gray-600 flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full" style={{backgroundColor: 'var(--accent-blue)'}}></div>
-            Privacy-preserving verification
+          
+          <h1 className="hero-title fade-in">
+            DappCon<br />
+            Discount Portal
+          </h1>
+          
+          <div className="body-text max-w-2xl my-8 fade-in">
+            Protocol Berg attendees get <strong style={{color: 'var(--accent-a)'}}>25% off</strong> DappCon tickets. 
+            Prove you have a unique Protocol Berg ticket using{' '}
+            <a 
+              href="https://pod.org/z-api/introduction" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="nav-link inline"
+            >
+              Zupass
+            </a>{' '}
+            and zero-knowledge proofs to unlock your discount.
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-6 items-start fade-in">
+            <div className="micro-text flex items-center gap-2">
+              <div 
+                className="w-2 h-2 rounded-full" 
+                style={{backgroundColor: 'var(--accent-a)'}}
+              ></div>
+              Limited discounts
+            </div>
+            <div className="micro-text flex items-center gap-2">
+              <div 
+                className="w-2 h-2 rounded-full" 
+                style={{backgroundColor: 'var(--accent-c)'}}
+              ></div>
+              Privacy-preserving verification
+            </div>
           </div>
         </div>
       </div>
@@ -126,49 +167,70 @@ function HeroSection() {
 
 function Footer() {
   return (
-    <footer id="privacy" style={{backgroundColor: 'var(--foreground)'}} className="text-white py-6 sm:py-8">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          <div>
-            <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">DappCon</h3>
-            <p className="text-gray-400 mb-3 sm:mb-4 text-sm sm:text-base">
-              The leading conference for decentralized application development and blockchain innovation.
-            </p>
-            <a 
-              href="https://dappcon.io/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-yellow-400 hover:text-yellow-300 transition-colors duration-200 font-medium text-sm sm:text-base"
-            >
-              Visit DappCon →
-            </a>
+    <>
+      <hr className="section-divider-dashed" />
+      <footer className="footer">
+        <div className="container">
+          <div className="grid md:grid-cols-3 gap-8 mb-8">
+            <div>
+              <h3 className="section-title mb-4">DappCon</h3>
+              <div className="body-text mb-4" style={{color: 'rgba(240, 239, 232, 0.8)'}}>
+                The leading conference for decentralized application development and blockchain innovation.
+              </div>
+              <a 
+                href="https://dappcon.io/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="micro-text"
+              >
+                Visit DappCon →
+              </a>
+            </div>
+            
+            <div>
+              <h3 className="section-title mb-4">Protocol Berg</h3>
+              <div className="body-text mb-4" style={{color: 'rgba(240, 239, 232, 0.8)'}}>
+                The decentralized protocol and infrastructure conference bringing together protocol engineers and researchers.
+              </div>
+              <a 
+                href="https://protocol.berlin/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="micro-text"
+              >
+                Visit Protocol Berg →
+              </a>
+            </div>
+            
+            <div>
+              <h3 className="section-title mb-4">Privacy</h3>
+              <div className="body-text" style={{color: 'rgba(240, 239, 232, 0.8)'}}>
+                Thanks to zero-knowledge proofs and{' '}
+                <a href="https://pod.org" target="_blank" rel="noopener noreferrer">PODs</a>, 
+                DappCon can verify that your Protocol Berg ticket is valid without needing to contact 
+                Protocol Berg organizers.
+              </div>
+              <div className="mt-4">
+                <a 
+                  href="https://pod.org" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="micro-text"
+                >
+                  Read POD Documentation →
+                </a>
+              </div>
+            </div>
           </div>
-          <div>
-            <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Protocol Berg</h3>
-            <p className="text-gray-400 mb-3 sm:mb-4 text-sm sm:text-base">
-              The decentralized protocol and infrastructure conference bringing together protocol engineers and researchers.
-            </p>
-            <a 
-              href="https://protocol.berlin/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:text-blue-300 transition-colors duration-200 font-medium text-sm sm:text-base"
-            >
-              Visit Protocol Berg →
-            </a>
-          </div>
-          <div className="sm:col-span-2 lg:col-span-1">
-            <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Privacy</h3>
-            <p className="text-gray-400 text-sm sm:text-base">
-              Thanks to zero-knowledge proofs and <a href="https://pod.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-400">PODs</a>, DappCon can verify that your Protocol Berg ticket is valid without needing to contact Protocol Berg organizers. <span className="block mt-2">To read more, check out the <a href="https://pod.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-400">POD</a> and <a href="https://pod.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-400">Zupass documentation</a>.</span>
-            </p>
+          
+          <div className="pt-8 border-t border-gray-800">
+            <div className="micro-text text-center" style={{color: 'rgba(240, 239, 232, 0.6)'}}>
+              &copy; {new Date().getFullYear()} DappCon Discount Portal. Powered by Zupass & Zero-Knowledge Proofs.
+            </div>
           </div>
         </div>
-        <div className="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-gray-400">
-          <p className="text-xs sm:text-sm">&copy; {new Date().getFullYear()} DappCon Discount Portal. Powered by Zupass & Zero-Knowledge Proofs.</p>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }
 
@@ -241,23 +303,20 @@ function RequestProof() {
 
   if (connectionState !== ClientConnectionState.CONNECTED) {
     return (
-      <section className="py-4 sm:py-12">
-        <div className="container mx-auto px-4 sm:px-6 max-w-2xl">
-          <div className="card text-center">
-            <h2 className="text-xl sm:text-2xl font-bold mb-3">Connect Your Zupass</h2>
-            <p className="text-gray-600 mb-6 text-sm sm:text-base">
+      <section className="section">
+        <div className="container max-w-2xl">
+          <div className="card text-center fade-in">
+            <h2 className="section-title mb-4">Connect Your Zupass</h2>
+            <div className="body-text mb-8">
               Connect your Zupass wallet to verify your Protocol Berg ticket and claim your DappCon discount.
-            </p>
-            
-            {/* Zupass Button */}
-            <div className="mb-4">
-              <div className="bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full inline-block">
-                <Toolbar />
-              </div>
             </div>
             
-            <div className="text-sm text-gray-500 flex items-center justify-center gap-2">
-              <div className="animate-pulse w-2 h-2 rounded-full" style={{backgroundColor: 'var(--accent)'}}></div>
+            {/* Zupass Button */}
+            <div className="mb-6">
+              <Toolbar />
+            </div>
+            
+            <div className="micro-text">
               Waiting for Zupass connection...
             </div>
           </div>
@@ -267,63 +326,74 @@ function RequestProof() {
   }
 
   return (
-    <section id="verify" className="py-4 sm:py-12">
-      <div className="container mx-auto px-4 sm:px-6 max-w-2xl">
+    <section className="section">
+      <div className="container max-w-2xl">
         {!proof ? (
-          <div className="card text-center">
-            <h2 className="text-xl sm:text-2xl font-bold mb-3">Verify Your Attendance</h2>
-            <p className="text-gray-600 mb-6 text-sm sm:text-base">
+          <div className="card text-center fade-in">
+            <h2 className="section-title mb-4">Verify Your Attendance</h2>
+            <div className="body-text mb-8">
               Generate a zero-knowledge proof to verify your Protocol Berg attendance without revealing personal information.
-            </p>
+            </div>
+            
             {claimError && (
-              <div className="bg-red-50 border border-red-200 p-4 rounded-lg mb-6 text-red-800">
-                <strong>🥺</strong> {claimError}
+              <div className="error-state mb-6">
+                <strong>Error:</strong> {claimError}
               </div>
             )}
+            
             <button
-              className={`button-primary ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`btn btn-primary ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
               onClick={requestProof}
               disabled={isLoading}
             >
               {isLoading ? 'Generating Proof...' : 'Generate Proof'}
             </button>
-            <div className="mt-6 text-sm text-gray-500">
-              <div className="flex items-center justify-center space-x-2 mb-2">
-                <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <span className="text-xs sm:text-sm">Privacy-preserving verification</span>
+            
+            <div className="mt-8 space-y-3">
+              <div className="micro-text flex items-center justify-center gap-3">
+                <div className="w-1 h-1 rounded-full" style={{backgroundColor: 'var(--accent-a)'}}></div>
+                Privacy-preserving verification
               </div>
-              <div className="flex items-center justify-center space-x-2">
-                <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <span className="text-xs sm:text-sm">One-time claim per attendee</span>
+              <div className="micro-text flex items-center justify-center gap-3">
+                <div className="w-1 h-1 rounded-full" style={{backgroundColor: 'var(--accent-c)'}}></div>
+                One-time claim per attendee
               </div>
             </div>
           </div>
         ) : (
-          <div className="card">
-            <div className="text-center mb-6">
-              <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3" style={{backgroundColor: 'var(--accent)', opacity: 0.1}}>
-                <svg className="w-6 h-6" style={{color: 'var(--accent)'}} fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+          <div className="card fade-in">
+            <div className="text-center mb-8">
+              <div 
+                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" 
+                style={{backgroundColor: 'var(--accent-a)', opacity: 0.2}}
+              >
+                <svg 
+                  className="w-8 h-8" 
+                  style={{color: 'var(--accent-a)'}} 
+                  fill="currentColor" 
+                  viewBox="0 0 20 20"
+                >
+                  <path 
+                    fillRule="evenodd" 
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" 
+                    clipRule="evenodd" 
+                  />
                 </svg>
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold mb-2">Proof Generated</h2>
-              <p className="text-gray-600 text-sm sm:text-base">Your Protocol Berg ticket proof has been generated</p>
+              <h2 className="section-title mb-2">Proof Generated</h2>
+              <div className="body-text">Your Protocol Berg ticket proof has been generated</div>
             </div>
             
-            <div className="rounded-lg p-4 mb-4" style={{backgroundColor: 'var(--muted)'}}>
-              <h3 className="font-semibold mb-3">Privacy-Preserving Verification</h3>
-              <div className="space-y-3">
+            <div className="mb-8">
+              <h3 className="subsection-title mb-4">Privacy-Preserving Verification</h3>
+              <div className="space-y-4">
                 <div>
-                  <div className="text-sm text-gray-600 mb-1">Unique Nullifier Hash:</div>
-                  <div className="font-mono text-xs sm:text-sm p-2 bg-white rounded border break-all">
+                  <div className="micro-text mb-2">Unique Nullifier Hash:</div>
+                  <div className="proof-hash">
                     {proof.revealedClaims.owner?.nullifierHashV4?.toString()}
                   </div>
                 </div>
-                <div className="text-xs text-gray-500 leading-relaxed">
+                <div className="body-text text-sm">
                   This nullifier is derived from your Protocol Berg ticket and prevents double-claiming 
                   while keeping your identity private. DappCon can verify you attended Protocol Berg 
                   without learning your name, email, or other personal details.
@@ -332,35 +402,35 @@ function RequestProof() {
             </div>
 
             {verified !== null && (
-              <div className={`p-4 rounded-lg mb-6 ${verified ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
-                <div className={`font-semibold ${verified ? 'text-green-800' : 'text-red-800'}`}>
+              <div className={verified ? 'success-state mb-6' : 'error-state mb-6'}>
+                <div className="subsection-title">
                   {verified ? '✓ Verification Successful' : '✗ Verification Failed'}
                 </div>
               </div>
             )}
 
             {claimedCode && (
-              <div className="accent-gradient p-4 sm:p-6 rounded-lg text-center mb-6">
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Your DappCon Discount Code</h3>
-                <div className="bg-white/20 rounded-lg p-3 sm:p-4 mb-4">
-                  <code className="text-lg sm:text-2xl font-mono font-bold text-gray-900 break-all">{claimedCode}</code>
+              <div className="discount-code mb-8">
+                <h3 className="section-title mb-4">Your DappCon Discount Code</h3>
+                <div className="discount-code-text">
+                  {claimedCode}
                 </div>
-                <p className="text-gray-800 text-xs sm:text-sm">
+                <div className="body-text text-sm">
                   Use this code for 25% off your DappCon ticket. Valid until event capacity is reached.
-                </p>
+                </div>
               </div>
             )}
 
             {claimError && (
-              <div className="bg-red-50 border border-red-200 p-4 rounded-lg mb-6 text-red-800">
+              <div className="error-state mb-6">
                 <strong>Error:</strong> {claimError}
               </div>
             )}
 
             {!claimedCode && !claimError && (
-              <div className="text-center">
+              <div className="text-center mb-6">
                 <button
-                  className={`button-primary ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`btn btn-primary ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                   onClick={verifyProof}
                   disabled={isLoading}
                 >
@@ -375,7 +445,7 @@ function RequestProof() {
                   href="https://dappcon.io/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="button-secondary"
+                  className="btn btn-secondary"
                 >
                   Get Your DappCon Ticket →
                 </a>
