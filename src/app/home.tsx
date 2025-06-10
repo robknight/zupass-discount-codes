@@ -130,7 +130,24 @@ function HeroSection() {
           </h1>
           
           <div className="body-text max-w-2xl my-8 fade-in">
-            Protocol Berg attendees get <strong style={{color: 'var(--accent-a)'}}>25% off</strong> DappCon tickets. 
+            <a 
+              href="https://protocol.berlin/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="nav-link inline"
+            >
+              Protocol Berg
+            </a>{' '}
+            attendees get <strong style={{color: 'var(--accent-a)'}}>25% off</strong>{' '}
+            <a 
+              href="https://dappcon.io/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="nav-link inline"
+            >
+              DappCon
+            </a>{' '}
+            tickets. 
             Prove you have a unique Protocol Berg ticket using{' '}
             <a 
               href="https://pod.org/z-api/introduction" 
@@ -171,10 +188,10 @@ function Footer() {
       <hr className="section-divider-dashed" />
       <footer className="footer">
         <div className="container">
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
+          <div className="grid md:grid-cols-3 gap-6 mb-6">
             <div>
-              <h3 className="section-title mb-4">DappCon</h3>
-              <div className="body-text mb-4" style={{color: 'rgba(240, 239, 232, 0.8)'}}>
+              <h3 className="section-title mb-3" style={{color: 'var(--paper-bg)'}}>DappCon</h3>
+              <div className="body-text mb-3" style={{color: 'rgba(240, 239, 232, 0.8)'}}>
                 The leading conference for decentralized application development and blockchain innovation.
               </div>
               <a 
@@ -182,14 +199,15 @@ function Footer() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="micro-text"
+                style={{color: 'var(--accent-a)'}}
               >
                 Visit DappCon →
               </a>
             </div>
             
             <div>
-              <h3 className="section-title mb-4">Protocol Berg</h3>
-              <div className="body-text mb-4" style={{color: 'rgba(240, 239, 232, 0.8)'}}>
+              <h3 className="section-title mb-3" style={{color: 'var(--paper-bg)'}}>Protocol Berg</h3>
+              <div className="body-text mb-3" style={{color: 'rgba(240, 239, 232, 0.8)'}}>
                 The decentralized protocol and infrastructure conference bringing together protocol engineers and researchers.
               </div>
               <a 
@@ -197,33 +215,33 @@ function Footer() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="micro-text"
+                style={{color: 'var(--accent-a)'}}
               >
                 Visit Protocol Berg →
               </a>
             </div>
             
             <div>
-              <h3 className="section-title mb-4">Privacy</h3>
-              <div className="body-text" style={{color: 'rgba(240, 239, 232, 0.8)'}}>
+              <h3 className="section-title mb-3" style={{color: 'var(--paper-bg)'}}>Privacy</h3>
+              <div className="body-text mb-3" style={{color: 'rgba(240, 239, 232, 0.8)'}}>
                 Thanks to zero-knowledge proofs and{' '}
-                <a href="https://pod.org" target="_blank" rel="noopener noreferrer">PODs</a>, 
+                <a href="https://pod.org" target="_blank" rel="noopener noreferrer" style={{color: 'var(--accent-a)'}}>PODs</a>, 
                 DappCon can verify that your Protocol Berg ticket is valid without needing to contact 
                 Protocol Berg organizers.
               </div>
-              <div className="mt-4">
-                <a 
-                  href="https://pod.org" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="micro-text"
-                >
-                  Read POD Documentation →
-                </a>
-              </div>
+              <a 
+                href="https://pod.org" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="micro-text"
+                style={{color: 'var(--accent-a)'}}
+              >
+                Read POD Documentation →
+              </a>
             </div>
           </div>
           
-          <div className="pt-8 border-t border-gray-800">
+          <div className="pt-4 border-t border-gray-800">
             <div className="micro-text text-center" style={{color: 'rgba(240, 239, 232, 0.6)'}}>
               &copy; {new Date().getFullYear()} DappCon Discount Portal. Powered by Zupass & Zero-Knowledge Proofs.
             </div>
@@ -307,17 +325,13 @@ function RequestProof() {
         <div className="container max-w-2xl">
           <div className="card text-center fade-in">
             <h2 className="section-title mb-4">Connect Your Zupass</h2>
-            <div className="body-text mb-8">
+            <div className="body-text mb-6">
               Connect your Zupass wallet to verify your Protocol Berg ticket and claim your DappCon discount.
             </div>
             
-            {/* Zupass Button */}
-            <div className="mb-6">
+            {/* Zupass Button - Centered */}
+            <div className="flex justify-center">
               <Toolbar />
-            </div>
-            
-            <div className="micro-text">
-              Waiting for Zupass connection...
             </div>
           </div>
         </div>
