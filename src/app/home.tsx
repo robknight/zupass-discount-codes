@@ -160,7 +160,7 @@ function HeroSection() {
             and zero-knowledge proofs to unlock your discount.
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-6 items-start fade-in">
+          <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start justify-center sm:justify-start fade-in">
             <div className="micro-text flex items-center gap-2">
               <div 
                 className="w-2 h-2 rounded-full" 
@@ -259,6 +259,7 @@ function RequestProof() {
   const [claimedCode, setClaimedCode] = useState<string | null>(null);
   const [claimError, setClaimError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   const requestProof = useCallback(async () => {
     if (connectionState !== ClientConnectionState.CONNECTED) return;
@@ -319,6 +320,37 @@ function RequestProof() {
     }
   }, [proof]);
 
+  const copyToClipboard = useCallback(async () => {
+    if (!claimedCode || isCopied) return;
+    
+    try {
+      await navigator.clipboard.writeText(claimedCode);
+      setIsCopied(true);
+      
+      // Reset copied state after animation completes
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = claimedCode;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      document.execCommand('copy');
+      textArea.remove();
+      setIsCopied(true);
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 2000);
+    }
+  }, [claimedCode, isCopied]);
+
   if (connectionState !== ClientConnectionState.CONNECTED) {
     return (
       <section className="section">
@@ -378,12 +410,11 @@ function RequestProof() {
           <div className="card fade-in">
             <div className="text-center mb-8">
               <div 
-                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" 
-                style={{backgroundColor: 'var(--accent-a)', opacity: 0.2}}
+                className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 proof-success-icon"
               >
                 <svg 
-                  className="w-8 h-8" 
-                  style={{color: 'var(--accent-a)'}} 
+                  className="w-10 h-10" 
+                  style={{color: 'var(--ink)'}} 
                   fill="currentColor" 
                   viewBox="0 0 20 20"
                 >
@@ -394,20 +425,20 @@ function RequestProof() {
                   />
                 </svg>
               </div>
-              <h2 className="section-title mb-2">Proof Generated</h2>
+              <h2 className="section-title mb-3">Proof Generated</h2>
               <div className="body-text">Your Protocol Berg ticket proof has been generated</div>
             </div>
             
-            <div className="mb-8">
-              <h3 className="subsection-title mb-4">Privacy-Preserving Verification</h3>
-              <div className="space-y-4">
+            <div className="verification-section mb-8">
+              <h3 className="subsection-title mb-6">Privacy-Preserving Verification</h3>
+              <div className="space-y-6">
                 <div>
-                  <div className="micro-text mb-2">Unique Nullifier Hash:</div>
+                  <div className="micro-text mb-3 hash-label">Unique Nullifier Hash:</div>
                   <div className="proof-hash">
                     {proof.revealedClaims.owner?.nullifierHashV4?.toString()}
                   </div>
                 </div>
-                <div className="body-text text-sm">
+                <div className="body-text text-sm leading-relaxed">
                   This nullifier is derived from your Protocol Berg ticket and prevents double-claiming 
                   while keeping your identity private. DappCon can verify you attended Protocol Berg 
                   without learning your name, email, or other personal details.
@@ -416,21 +447,43 @@ function RequestProof() {
             </div>
 
             {verified !== null && (
-              <div className={verified ? 'success-state mb-6' : 'error-state mb-6'}>
+              <div className={verified ? 'success-state-enhanced mb-6' : 'error-state mb-6'}>
                 <div className="subsection-title">
-                  {verified ? '✓ Verification Successful' : '✗ Verification Failed'}
+                  {verified ? 'Verification Successful' : '✗ Verification Failed'}
                 </div>
               </div>
             )}
 
             {claimedCode && (
               <div className="discount-code mb-8">
-                <h3 className="section-title mb-4">Your DappCon Discount Code</h3>
-                <div className="discount-code-text">
-                  {claimedCode}
-                </div>
-                <div className="body-text text-sm">
-                  Use this code for 25% off your DappCon ticket. Valid until event capacity is reached.
+                <div className="discount-code-content">
+                  <h3 className="discount-code-title">Your DappCon Discount Code</h3>
+                  <div 
+                    className={`discount-code-text ${isCopied ? 'copy-success' : ''}`}
+                    onClick={copyToClipboard}
+                    title="Click to copy"
+                  >
+                    {claimedCode}
+                    {isCopied && (
+                      <>
+                        <div className="copy-flash" />
+                        <div className="copy-ripple" />
+                        <div className="copy-particles">
+                          <div className="particle" />
+                          <div className="particle" />
+                          <div className="particle" />
+                          <div className="particle" />
+                          <div className="particle" />
+                          <div className="particle" />
+                          <div className="particle" />
+                          <div className="particle" />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <div className="discount-code-subtitle">
+                    {isCopied ? 'DappCon here we come 😎' : 'Click the code above to copy • Use for 25% off your DappCon ticket'}
+                  </div>
                 </div>
               </div>
             )}
