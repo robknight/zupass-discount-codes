@@ -44,17 +44,19 @@ function Header() {
               href="https://dappcon.io/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+              className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors flex items-center"
             >
               DAPPCON
+              <svg xmlns="http://www.w3.org/2000/svg" className="inline w-3 h-3 ml-1" fill="none" viewBox="0 0 16 16" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 10l4-4m0 0H7m3 0v3" /><rect x="2.75" y="2.75" width="10.5" height="10.5" rx="2.25" stroke="currentColor" strokeWidth="1.5" fill="none"/></svg>
             </a>
             <a 
               href="https://protocol.berlin/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+              className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors flex items-center"
             >
               PROTOCOL BERG
+              <svg xmlns="http://www.w3.org/2000/svg" className="inline w-3 h-3 ml-1" fill="none" viewBox="0 0 16 16" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 10l4-4m0 0H7m3 0v3" /><rect x="2.75" y="2.75" width="10.5" height="10.5" rx="2.25" stroke="currentColor" strokeWidth="1.5" fill="none"/></svg>
             </a>
           </nav>
 
