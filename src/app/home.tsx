@@ -9,6 +9,7 @@ import {
 import { useState, useCallback, useEffect } from "react";
 import { getTicketProofRequest } from "@/utils/ticketProof";
 import { ProveResult, serializeProofResult } from "@/utils/serialize";
+import { hashTicketId } from "@/utils/hash";
 
 export default function Home() {
   return (
@@ -351,6 +352,17 @@ function RequestProof() {
     }
   }, [claimedCode, isCopied]);
 
+  // --- Ticket ID hash display logic ---
+  let ticketIdRaw = proof?.revealedClaims?.pods?.ticket?.entries?.ticketId?.value;
+  let ticketId: string | undefined = typeof ticketIdRaw === 'string' ? ticketIdRaw : undefined;
+  let ticketIdHash: string | null = null;
+  let compactTicketIdHash: string | null = null;
+  if (ticketId) {
+    ticketIdHash = hashTicketId(ticketId);
+    compactTicketIdHash = ticketIdHash.slice(0, 8) + '...' + ticketIdHash.slice(-8);
+  }
+  // --- End Ticket ID hash display logic ---
+
   if (connectionState !== ClientConnectionState.CONNECTED) {
     return (
       <section className="section">
@@ -429,19 +441,29 @@ function RequestProof() {
               <div className="body-text">Your Protocol Berg ticket proof has been generated</div>
             </div>
             
-            <div className="verification-section mb-8">
-              <h3 className="subsection-title mb-6">Privacy-Preserving Verification</h3>
-              <div className="space-y-6">
+            <div className="verification-section mb-6">
+              <h3 className="subsection-title mb-4">Privacy-Preserving Verification</h3>
+              <div className="space-y-4">
+                {/* Ticket ID Hash Display - now first */}
+                {ticketIdHash && (
+                  <div>
+                    <div className="micro-text mb-1 hash-label flex items-center gap-2">
+                      Ticket ID Hash <span className="text-xs text-gray-500">(SHA-256)</span>
+                    </div>
+                    <div className="proof-hash text-xs" style={{ fontFamily: 'monospace', letterSpacing: '0.03em', marginBottom: 2 }}>
+                      {compactTicketIdHash}
+                    </div>
+                  </div>
+                )}
+                {/* End Ticket ID Hash Display */}
                 <div>
-                  <div className="micro-text mb-3 hash-label">Unique Nullifier Hash:</div>
-                  <div className="proof-hash">
+                  <div className="micro-text mb-1 hash-label">Unique Nullifier Hash</div>
+                  <div className="proof-hash" style={{marginBottom: 2}}>
                     {proof.revealedClaims.owner?.nullifierHashV4?.toString()}
                   </div>
                 </div>
-                <div className="body-text text-sm leading-relaxed">
-                  This nullifier is derived from your Protocol Berg ticket and prevents double-claiming 
-                  while keeping your identity private. DappCon can verify you attended Protocol Berg 
-                  without learning your name, email, or other personal details.
+                <div className="body-text text-xs leading-relaxed mt-0">
+                  The ticket ID hash and nullifier are derived from your Protocol Berg ticket <a href="https://pod.org" target="_blank" rel="noopener noreferrer" className="nav-link inline">POD</a> and prevent double-claiming while keeping your identity private. DappCon can verify you attended Protocol Berg without learning your name, email, or other personal details.
                 </div>
               </div>
             </div>
