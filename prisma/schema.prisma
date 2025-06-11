@@ -17,5 +17,5 @@ datasource db {
 model VoucherCode {
   id           Int     @id @default(autoincrement())
   voucher_code String  @unique
-  nullifier    String? @unique
+  ticket_id_hash String? @unique
 }

@@ -7,8 +7,8 @@ import {
   useParcnetClient,
 } from "@parcnet-js/app-connector-react";
 import { useState, useCallback, useEffect } from "react";
-import { getTicketProofRequest } from "@/lib/ticketProof";
-import { ProveResult, serializeProofResult } from "@/lib/serialize";
+import { getTicketProofRequest } from "@/utils/ticketProof";
+import { ProveResult, serializeProofResult } from "@/utils/serialize";
 
 export default function Home() {
   return (

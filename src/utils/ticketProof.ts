@@ -14,6 +14,7 @@ export function getTicketProofRequest() {
       attendeeEmail: false,
       attendeeName: false,
       eventId: true,
+      ticketId: true,
     },
     externalNullifier: {
       type: "string",
