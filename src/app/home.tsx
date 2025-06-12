@@ -448,7 +448,7 @@ function RequestProof() {
                 {ticketIdHash && (
                   <div>
                     <div className="micro-text mb-1 hash-label flex items-center gap-2">
-                      Ticket ID Hash <span className="text-xs text-gray-500">(SHA-256)</span>
+                      Ticket ID Hash
                     </div>
                     <div className="proof-hash text-xs" style={{ fontFamily: 'monospace', letterSpacing: '0.03em', marginBottom: 2 }}>
                       {compactTicketIdHash}
