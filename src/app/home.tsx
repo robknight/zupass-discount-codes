@@ -17,7 +17,7 @@ export default function Home() {
       zapp={{
         name: "DappCon Discount Portal",
         permissions: {
-          REQUEST_PROOF: { collections: ["Devcon SEA"] },
+          REQUEST_PROOF: { collections: ["Protocol Berg v2"] },
           READ_PUBLIC_IDENTIFIERS: {},
         },
       }}
