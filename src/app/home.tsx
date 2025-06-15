@@ -271,7 +271,7 @@ function RequestProof() {
       console.log(req.schema);
       const res = await z.gpc.prove({
         request: req.schema,
-        collectionIds: ["Devcon SEA"],
+        collectionIds: ["Protocol Berg v2"],
       });
 
       if (res.success) {
