@@ -164,3 +164,11 @@ If you want to run your own backend and database (for privacy, testing, or devel
 
 **Maintainers:**
 - Please keep this README up to date as the project evolves!
+
+---
+
+## Community & Feedback
+
+This project is built on new and evolving technology. We warmly welcome suggestions, improvements, and bugfixes from the community! If you encounter issues or have ideas for making this demo better, please open an issue or submit a pull request.
+
+Thank you for your patience and support as we continue to improve and innovate with Zupass, PODs, GPC, and privacy-preserving tech!
