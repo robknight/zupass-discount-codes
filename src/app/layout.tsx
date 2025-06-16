@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "DappCon Discount Portal | Protocol Berg Attendees",
-    description: "Protocol Berg attendees get 25% off DappCon tickets. Verify your attendance with zero-knowledge proof.",
+    description: "Protocol Berg attendees get 25% off DappCon tickets. Prove your attendance with Zupass and zero-knowledge proofs.",
     type: "website",
     url: "https://dappcon.discountzu.app",
     images: [
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "DappCon Discount Portal | Protocol Berg Attendees",
-    description: "Protocol Berg attendees get 25% off DappCon tickets. Verify your attendance with zero-knowledge proof.",
+    description: "Protocol Berg attendees get 25% off DappCon tickets. Prove your attendance with Zupass and zero-knowledge proofs.",
     images: ["/og-image.jpg"],
   },
 };
