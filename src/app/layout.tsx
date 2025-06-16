@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "DappCon Discount Portal | Protocol Berg Attendees",
   description: "Protocol Berg attendees get 25% off DappCon tickets. Verify your attendance with zero-knowledge proof to unlock your exclusive discount.",
   keywords: "DappCon, Protocol Berg, discount, zero-knowledge proof, blockchain conference, ethereum",
-  authors: [{ name: "DappCon Team" }],
+  authors: [{ name: "Zupass Team" }],
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
@@ -14,23 +14,14 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "DappCon Discount Portal | Protocol Berg Attendees",
-    description: "Protocol Berg attendees get 25% off DappCon tickets. Verify your attendance with zero-knowledge proof.",
+    description: "Protocol Berg attendees get 25% off DappCon tickets. Prove your attendance with Zupass and zero-knowledge proofs.",
     type: "website",
-    url: "https://discount.dappcon.io",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "DappCon Discount Portal - 25% Off for Protocol Berg Attendees",
-      },
-    ],
+    url: "https://dappcon.discountzu.app",
   },
   twitter: {
     card: "summary_large_image",
     title: "DappCon Discount Portal | Protocol Berg Attendees",
-    description: "Protocol Berg attendees get 25% off DappCon tickets. Verify your attendance with zero-knowledge proof.",
-    images: ["/og-image.jpg"],
+    description: "Protocol Berg attendees get 25% off DappCon tickets. Prove your attendance with Zupass and zero-knowledge proofs.",
   },
 };
 
