@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: "DappCon Discount Portal | Protocol Berg Attendees",
     description: "Protocol Berg attendees get 25% off DappCon tickets. Verify your attendance with zero-knowledge proof.",
     type: "website",
-    url: "https://discount.dappcon.io",
+    url: "https://dappcon.discountzu.app",
     images: [
       {
         url: "/og-image.jpg",
