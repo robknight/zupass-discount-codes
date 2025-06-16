@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <ParcnetClientProvider
       zapp={{
-        name: "DappCon Discount Portal",
+        name: "DappCon Discount Portal 2025",
         permissions: {
           REQUEST_PROOF: { collections: ["Protocol Berg v2"] },
           READ_PUBLIC_IDENTIFIERS: {},
