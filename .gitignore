@@ -45,7 +45,6 @@ next-env.d.ts
 # ai tools
 .cursor
 /src/generated/prisma
-
-references/*
+.claude
 PROJECT_CREATION_GUIDE.md
-.claude*
+/references
