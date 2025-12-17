@@ -16,7 +16,7 @@
     "@pcd/proto-pod-gpc-artifacts": "^0.13.0",
     "@supabase/supabase-js": "^2.50.0",
     "ffjavascript": "^0.3.1",
-    "next": "15.0.1",
+    "next": "15.0.7",
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
     "rollup-plugin-node-polyfills": "^0.2.1"
